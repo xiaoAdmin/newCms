@@ -15,7 +15,7 @@ import com.taobao.api.response.TaobaokeItemsGetResponse
 import com.taobao.api.response.UmpPromotionGetResponse
 
 class TaobaoApi{
-    
+
 	String url = "http://gw.api.taobao.com/router/rest";
 	String appkey = "21453849";
 	String secret = "54bd9a787d60ac059749495c751e6c7b";
@@ -23,7 +23,7 @@ class TaobaoApi{
 
 	def promotionPrice(String keyword){
 		TaobaokeItemsCouponGetRequest req=new TaobaokeItemsCouponGetRequest();
-		req.setKeyword("琛ｆ湇"); 
+		req.setKeyword("琛ｆ湇");
 		req.setCid(0L);
 		this.setFields(req)
 		TaobaokeItemsCouponGetResponse rs = client.execute(req);
@@ -32,9 +32,9 @@ class TaobaoApi{
 	}
 
 	/**
-	 * 鑾峰緱鍟嗗搧淇冮攢娲诲姩浠锋牸
-	 * @param id 鍟嗗搧ID
-	 * @return 淇冮攢浠凤紝涓虹┖璇存槑娌℃湁淇冮攢
+	 * 获得商品促销活动价格
+	 * @param id 商品ID
+	 * @return 促销价，为空说明没有促销
 	 */
 
 	public  String getPromotionPrice(long id) {
@@ -46,14 +46,14 @@ class TaobaoApi{
 		UmpPromotionGetRequest req = new UmpPromotionGetRequest();
 		req.setItemId(id);
 		TaobaoClient client = new DefaultTaobaoClient(url, appkey, secret);
-		// 鑾峰彇鎶樻墸鍙互涓嶄娇鐢╯essionKey
+		// 获取折扣可以不使用sessionKey
 		UmpPromotionGetResponse response = null;
 
 		response = client.execute(req, null);
 
 		PromotionDisplayTop top = response.getPromotions();
-		// 鍟嗗搧浼樻儬璇︽儏鏌ヨ锛屽彲鏌ヨ鍟嗗搧璁剧疆鐨勮缁嗕紭鎯犮�鍖呮嫭闄愭椂鎶樻墸锛屾弧灏遍�绛夊畼鏂逛紭鎯犱互鍙婄涓夋柟浼樻儬銆�
-		// 涓嬮潰鏄粠鍒楄〃鏌ヤ竴涓鍚堝綋鍓嶆棩鏈熻寖鍥寸殑淇冮攢浠锋牸
+		// 商品优惠详情查询，可查询商品设置的详细优惠。包括限时折扣，满就送等官方优惠以及第三方优惠。
+		// 下面是从列表查一个符合当前日期范围的促销价格
 
 		List<PromotionInItem> list = top.getPromotionInItem();
 		if(list==null){
@@ -89,7 +89,7 @@ class TaobaoApi{
 		req.setFields("promotion_price,num_iid,title,nick,pic_url,price,click_url,commission,commission_rate,commission_num,commission_volume,shop_click_url,seller_credit_score,item_location,volume")
 	}
 	/**
-	 * 鎼滅储娣樺鍟嗗搧
+	 * 搜索淘客商品
 	 * @param keyword
 	 * @param pageNo
 	 * @param pageSize
