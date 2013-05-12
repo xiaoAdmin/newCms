@@ -34,7 +34,7 @@
 			if(!data.success){
 				alert(data.message)
 			}
-			document.goodsList.submit();
+			location.reload();
 		});
 	}
 
@@ -117,17 +117,15 @@
 						</td>
 						<td><g:img
 								uri="${fieldValue(bean: goodsInstance, field: "picUrl")}"
-								width="50" height="50" /> <g:link action="show"
-								id="${goodsInstance.id}">
-
-								${fieldValue(bean: goodsInstance, field: "goodsName")}
-							</g:link></td>
+								width="50" height="50" /> <a id="${goodsInstance.id}"
+							href="${goodsInstance.clickUrl} target="_blank""> ${fieldValue(bean: goodsInstance, field: "goodsName")}
+						</a></td>
 						<td>
-							${fieldValue(bean: goodsInstance, field: "originalPrice")}
+							${fieldValue(bean: goodsInstance, field: "originalPriceDes")}
 						</td>
 
 						<td>
-							${fieldValue(bean: goodsInstance, field: "promotionPrice")}
+							${fieldValue(bean: goodsInstance, field: "promotionPriceDes")}
 						</td>
 						<td><g:if test="${params.goodsStatus != 'SELLING'}">编辑 <g:checkBox
 									name="hasEdited" checked="${goodsInstance.hasEdited}"
@@ -144,7 +142,7 @@
 								optionKey="key" optionValue="value"
 								onchange="changeStatus(${goodsInstance.id},'goodsStatus',this.value)" /></td>
 						<td>
-							${fieldValue(bean: goodsInstance, field: "creationDateString")}
+							${fieldValue(bean: goodsInstance, field: "creationDateDes")}
 						</td>
 
 						<td><g:link action="edit" id="${goodsInstance.id}">编辑</g:link></td>

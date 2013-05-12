@@ -29,6 +29,7 @@ grails.mime.types = [
     xml:           ['text/xml', 'application/xml']
 ]
 
+//grails.gorm.failOnError=true
 // URL Mapping Cache Max Size, defaults to 5000
 //grails.urlmapping.cache.maxsize = 1000
 
@@ -60,13 +61,17 @@ grails.exceptionresolver.params.exclude = ['password']
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
 grails.hibernate.cache.queries = false
 
+grails.gorm.default.constraints = {
+	'*'(nullable: true, size: 1..300)
+}
+
 environments {
     development {
         grails.logging.jul.usebridge = true
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        // TODO: grails.serverURL = "http://localhost:8090/cms"
     }
 }
 

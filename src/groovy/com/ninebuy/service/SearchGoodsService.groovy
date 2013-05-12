@@ -2,12 +2,20 @@ package com.ninebuy.service
 
 import grails.orm.PagedResultList
 
+import com.ninebuy.api.GoodsStatus
 import com.ninebuy.cms.model.Goods
 
 class SearchGoodsService {
 	def params
 	def max
 
+	static statusList = [
+		[key:GoodsStatus.UNUSED.value, value:GoodsStatus.UNUSED.description],
+		[key:GoodsStatus.SELLING.value, value:GoodsStatus.SELLING.description],
+		[key:GoodsStatus.TOMORROW.value,value:GoodsStatus.TOMORROW.description],
+		[key:GoodsStatus.SCHEDULED.value,value:GoodsStatus.SCHEDULED.description]
+	]
+	
 	def service(){
 		def queryParams = [:]
 		queryParams['max'] = Math.min(max ?: 10, 100)
@@ -39,7 +47,6 @@ class SearchGoodsService {
 
 		return [goodsInstanceList:goodsList,
 			goodsInstanceTotal: goodsList.totalCount,
-			params:params,
-			statusList:Goods.statusList]
+			params:params,statusList:statusList]
 	}
 }

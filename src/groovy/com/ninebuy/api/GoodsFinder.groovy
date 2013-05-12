@@ -1,9 +1,8 @@
 package com.ninebuy.api
 
-import java.util.Date;
-
 import com.ninebuy.cms.model.Goods
 import com.taobao.api.domain.TaobaokeItem
+import java.lang.Double
 
 class GoodsFinder {
 	/**
@@ -21,13 +20,14 @@ class GoodsFinder {
 
 	def processGoods(long pageNo,long pageSize,String Keyword){
 		def remoteGoods = findGoods(pageNo, pageSize,Keyword)
+		
 		def localGoodsMap = loadLocalGoods()
-
+		println '---'+remoteGoods.size()
 		remoteGoods.each {
 			if (localGoodsMap.keySet().contains(it.numId)) {
 				//TODO：update info and save
 			}
-			it.save()
+			println it.save()
 		}
 	}
 
@@ -60,33 +60,30 @@ class GoodsFinder {
 	 * @return
 	 */
 	def Goods createGoods(TaobaokeItem item){
-
-		def goods = new Goods()
-		parmMaps.each {
-			goods[it.key] = item[it.value]
-		}
+		def goods = new Goods([
+			numId:item.numIid,
+			nick:item.nick,
+			goodsName:item.title,
+			originalPrice:Double.parseDouble(item.price),
+			originalPriceDes:item.price,
+			goodsLocation:item.itemLocation,
+			sellerCreditScore:item.sellerCreditScore,
+			clickUrl:item.clickUrl,
+			shopClickUrl:item.shopClickUrl,
+			picUrl:item.picUrl,
+			commissionRate:item.commissionRate,
+			commission:item.commission,
+			commissionNum:item.commissionNum,
+			commissionVolume:item.commissionVolume,
+			volume:item.volume,
+			promotionPrice:Double.parseDouble(item.promotionPrice),
+			promotionPriceDes:item.promotionPrice
+		])
 		//TODO:找个好点的正则
 		goods['goodsName'] = goods.getGoodsName().
 				replaceAll("^((【)?米折网专享(】)?)|(<[a-zA-Z]+[1-9]?[^><]*>)|(</[a-zA-Z]+[1-9]?>)", "")
 		return goods
 	}
-
-	static def parmMaps = [
-		'numId': 'numIid',
-		'nick':'nick',
-		'goodsName':'title',
-		'originalPrice': 'price',
-		'goodsLocation':'itemLocation',
-		'sellerCreditScore':'sellerCreditScore',
-		'clickUrl':'clickUrl',
-		'shopClickUrl':'shopClickUrl',
-		'picUrl':'picUrl',
-		'commissionRate':'commissionRate',
-		'commission':'commission',
-		'commissionNum':'commissionNum',
-		'commissionVolume':'commissionVolume',
-		'volume':'volume',
-		'promotionPrice':'promotionPrice']
 
 	def show(TaobaokeItem item){
 		println "淘宝客商品数字id:"+ item.getNumIid()

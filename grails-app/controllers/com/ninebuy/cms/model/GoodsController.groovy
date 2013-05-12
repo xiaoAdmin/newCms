@@ -1,5 +1,7 @@
+
 package com.ninebuy.cms.model
 
+import com.ninebuy.api.GoodsStatus;
 import org.springframework.dao.DataIntegrityViolationException
 
 import com.ninebuy.api.GoodsFinder
@@ -19,30 +21,6 @@ class GoodsController {
 		service.max = max
 		service.service()
 		render(view: "list", model: service.service())
-	}
-
-	//未使用包括搜索的新数据，编辑后未排期的
-	def unused(Integer max){
-		params['goodsStatus'] = Goods.UNUSED
-		list(max)
-	}
-
-	//查询今日销售的商品
-	def selling(Integer max){
-		params['goodsStatus'] = Goods.SELLING
-		list(max)
-	}
-
-	//查询明日预告
-	def tomorrow(Integer max){
-		params['goodsStatus'] = Goods.TOMORROW
-		list(max)
-	}
-
-	//查询排期商品
-	def scheduled(Integer max){
-		params['goodsStatus'] = Goods.SCHEDULED
-		list(max)
 	}
 
 	def create() {
@@ -88,7 +66,7 @@ class GoodsController {
 			return
 		}
 
-		[goodsInstance: goodsInstance ,statusList:Goods.statusList]
+		[goodsInstance: goodsInstance]
 	}
 
 	def update(Long id, Long version) {
@@ -158,7 +136,7 @@ class GoodsController {
 
 	def load(){
 		new GoodsFinder().start()
-		redirect(action:"unused")
+		redirect(action:"list")
 	}
 
 	/**
@@ -172,7 +150,9 @@ class GoodsController {
 		goodsInstance.properties = params
 		goodsInstance.save(flush: true)
 		if(goodsInstance.errors.errorCount !=0 ){
-			return render(contentType: "text/json") { ['success':false,'message':'不能这样操作'] }
+			return render(contentType: "text/json") {
+				['success':false,'message':'不能这样操作']
+			}
 		}
 		render(contentType: "text/json") { ['success':true] }
 	}

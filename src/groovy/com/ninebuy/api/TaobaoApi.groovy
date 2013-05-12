@@ -114,16 +114,7 @@ class TaobaoApi{
 		req.setKeyword(keyword);
 
 		TaobaokeItemsGetResponse response = client.execute(req);
-		def list=response.getTaobaokeItems()
-		//		for( item in list){
-		//			item.promotionPrice
-		//			def promotionPrice= getPromotionPrice(item.getNumIid())
-		//			item.setPromotionPrice(promotionPrice)
-		//		}
-
-		list
-
-
+		response.getTaobaokeItems()
 	}
 }
 

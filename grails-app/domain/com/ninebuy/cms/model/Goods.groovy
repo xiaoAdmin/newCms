@@ -1,53 +1,44 @@
 package com.ninebuy.cms.model
 
+import com.ninebuy.api.GoodsStatus;
+
 class Goods {
-	static String UNUSED = 'UNUSED'
-	static SELLING ='SELLING'
-	static TOMORROW ='TOMORROW'
-	static SCHEDULED ='SCHEDULED'
 
-	static statusList=[
-		[key:UNUSED, value:"未处理"],
-		[key:SELLING,value:'今日特价'],
-		[key:TOMORROW,value:'明日预告'],
-		[key:SCHEDULED,value:'排期商品']
-	]
-
-	Long numId
+	Long numId//淘宝客商品数字id
 	String nick
 	String goodsName
-	String originalPrice
-	String goodsLocation
+	Double originalPrice//商品原价
+	String originalPriceDes//商品原价des
+	String goodsLocation//商品所在地
 	Long SellerCreditScore//卖家信用，可能用于业务排序
-	String clickUrl
-	String shopClickUrl
+	String clickUrl//推广点击url
+	String shopClickUrl//商品所在店铺的推广点击url
 	String picUrl
-	String commissionRate
+	String commissionRate//淘宝客佣金比率，比如：1234.00代表12.34%
 	String commission //淘宝客佣金
 	String commissionNum//累计成交量.注：返回的数据是30天内累计推广量
-	String commissionVolume
+	String commissionVolume//累计总支出佣金量
 	Long volume//30天内交易量
-	String promotionPrice
+	Double promotionPrice //促销价格
+	String promotionPriceDes//促销价格des
 
-	//
+	String cid//标准商品后台类目id。该ID可以通过taobao.itemcats.get接口获取到,数字串，例如：1234,34343,2313
+	
 	Date creationDate = new Date()
+	String creationDateDes= creationDate.format('yyyy-MM-dd')
+	
 	Date updateDate = new Date()
 
-	String creationDateString = creationDate.format('yyyy-MM-dd')
-
-	String goodsStatus = UNUSED
+	String goodsStatus = GoodsStatus.UNUSED.value
 	boolean hasEdited  = false//已经编辑标志
-	boolean forSale = false//上架标记
-
-	long parentCid
-	List cids
+	boolean forSale = false//上架标记	
 	
 	static constraints = {
 		clickUrl(maxSize: 300)
 		shopClickUrl(maxSize:300)
 		
 		goodsStatus validator: {val, obj ->
-			if(val != Goods.UNUSED){
+			if(!val.equals(GoodsStatus.UNUSED.value)){
 				return obj.hasEdited?:['invalid.changestatus']
 			}
 		}
