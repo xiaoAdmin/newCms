@@ -1,7 +1,9 @@
 package com.ninebuy.cms.model
 
+import org.codehaus.groovy.grails.plugins.codecs.MD5Codec
+
 class User {
-	
+
 	String username
 	String password
 	/**
@@ -9,13 +11,14 @@ class User {
 	 * 1 admin
 	 * 10 opertion
 	 */
-    int level
-	def boolean validateEmpty(){
-		if(username && password)  true	else false
+	int level
+
+	def boolean isEmpty(){
+		if(username && password)  false	else true
 	}
-	static mapping={
-		table 'cms_user'
-	}
+	
+	static mapping={ table 'cms_user' }
+
 	static constraints = {
 	}
 }

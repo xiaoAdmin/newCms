@@ -28,14 +28,16 @@ class Goods {
 	String creationDateDes= creationDate.format('yyyy-MM-dd')
 	
 	Date updateDate = new Date()
-
+	String updateDateDes= updateDate.format('yyyy-MM-dd')
+	
 	String goodsStatus = GoodsStatus.UNUSED.value
 	boolean hasEdited  = false//已经编辑标志
 	boolean forSale = false//上架标记	
 	
 	static constraints = {
-		clickUrl(maxSize: 300)
-		shopClickUrl(maxSize:300)
+		clickUrl(maxSize: 1024)
+		shopClickUrl(maxSize:1024)
+		goodsName(maxSize:512)
 		
 		goodsStatus validator: {val, obj ->
 			if(!val.equals(GoodsStatus.UNUSED.value)){
@@ -45,5 +47,6 @@ class Goods {
 	}
 
 	static mapping = {
+		table 'cms_goods'
 	}
 }

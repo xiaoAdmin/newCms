@@ -15,7 +15,7 @@
 		<ul>
 			<li><a class="home" href="${createLink(uri: '/')}"><g:message
 						code="default.home.label" /></a></li>
-			<li><g:link class="list" action="unused">
+			<li><g:link class="list" action="list">
 					<g:message code="default.list.label" args="[entityName]" />
 				</g:link></li>
 			<li><g:link class="create" action="create">
@@ -53,7 +53,7 @@
 			<g:if test="${goodsInstance?.originalPrice}">
 				<li class="fieldcontain"><span id="originalPrice-label"
 					class="property-label"><g:message
-							code="goods.originalPrice.label" default="Original Price" /></span> <span
+							code="goods.originalPrice.label" default="原价" /></span> <span
 					class="property-value" aria-labelledby="originalPrice-label"><g:fieldValue
 							bean="${goodsInstance}" field="originalPrice" /></span></li>
 			</g:if>
@@ -61,7 +61,7 @@
 			<g:if test="${goodsInstance?.promotionPrice}">
 				<li class="fieldcontain"><span id="promotionPrice-label"
 					class="property-label"><g:message
-							code="goods.promotionPrice.label" default="Promotion Price" /></span> <span
+							code="goods.promotionPrice.label" default="折扣价" /></span> <span
 					class="property-value" aria-labelledby="promotionPrice-label"><g:fieldValue
 							bean="${goodsInstance}" field="promotionPrice" /></span></li>
 			</g:if>

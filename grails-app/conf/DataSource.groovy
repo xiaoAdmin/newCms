@@ -14,19 +14,19 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost/9buy"
+            url = "jdbc:mysql://localhost/9buy?useUnicode=true&characterEncoding=UTF-8"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/9buy"
+            url = "jdbc:mysql://localhost/9buy?useUnicode=true&characterEncoding=UTF-8"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/9buy"
+            url = "jdbc:mysql://localhost/9buy?useUnicode=true&characterEncoding=UTF-8"
             pooled = true
             properties {
                maxActive = -1

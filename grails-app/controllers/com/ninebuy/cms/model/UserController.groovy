@@ -6,8 +6,16 @@ class UserController {
 	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+	def beforeInterceptor = [action: this.&auth, except: 'login']
+	// defined with private scope, so it's not considered an action
+	private auth() {
+		if (!session.user) {
+			redirect(controller:'login', action: 'userLogin')
+			return false
+		}
+	}
+	
     def index() {
-		
         redirect(action: "list", params: params)
     }
 

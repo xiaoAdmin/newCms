@@ -179,7 +179,7 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="sellerCreditScore" type="number"
-		value="${goodsInstance.sellerCreditScore}" required="" />
+		value="${goodsInstance.sellerCreditScore}" />
 </div>
 
 <div

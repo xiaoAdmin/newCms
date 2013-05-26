@@ -7,8 +7,7 @@
 <g:set var="entityName"
 	value="${message(code: 'goods.label', default: 'Goods')}" />
 <title><g:message code="default.list.label" args="[entityName]" /></title>
-<style type="text/css" media="screen">
-</style>
+<style type="text/css" media="screen"></style>
 <g:javascript library="jquery" />
 <link rel="stylesheet"
 	href="${resource(dir: 'css', file: 'left_navigator.css')}" />
@@ -28,13 +27,14 @@
 	}
 
 	function changeStatus(id,field,checked){
-		var parms = {id:id}
-		parms[field] = checked
-		$.post('../goods/changeStatus',parms, function(data) {
+		var params = {id:id}
+		params[field] = checked
+		$.post('../goods/changeStatus',params, function(data) {
 			if(!data.success){
 				alert(data.message)
 			}
-			location.reload();
+			$('#goodsList').submit()
+			//location.reload()
 		});
 	}
 
@@ -55,9 +55,6 @@
 		</ul>
 	</div>
 	<div id="page-body" class="content scaffold-list" role="main">
-		<h1>
-			<g:message code="default.list.label" args="${[params.action]}" />
-		</h1>
 		<g:if test="${flash.message}">
 			<div class="message" role="status">
 				${flash.message}
@@ -69,6 +66,7 @@
 				<g:hiddenField name="menu" value="${params.action}" />
 			</g:form>
 			<g:form name="goodsList" action="${params.action}">
+				<g:hiddenField name="goodsStatus" value="${params.goodsStatus}" />
 				<g:submitButton name="search" class="search"
 					value="${message(code: 'default.button.search.label', default: 'search')}" />
 				<g:if test="${params.goodsStatus != 'SELLING'}">
@@ -83,7 +81,7 @@
 						from="[[key:false,value:'下架'],[key:true,value:'上架']]"
 						optionKey="key" optionValue="value" />
 				</g:if>
-						关键字: <g:textField name="keyWords" />
+						关键字: <g:textField name="keyWords" value="${params.keyWords}"/>
 			</g:form>
 		</div>
 		<table id="goods-list">
@@ -107,6 +105,7 @@
 						title="${message(code: 'goods.creationDate.label', default: '创建日期')}" />
 					<th />
 					<th />
+					<th />
 				</tr>
 			</thead>
 			<tbody>
@@ -118,7 +117,7 @@
 						<td><g:img
 								uri="${fieldValue(bean: goodsInstance, field: "picUrl")}"
 								width="50" height="50" /> <a id="${goodsInstance.id}"
-							href="${goodsInstance.clickUrl} target="_blank""> ${fieldValue(bean: goodsInstance, field: "goodsName")}
+							href="${goodsInstance.clickUrl}" target="_blank"> ${fieldValue(bean: goodsInstance, field: "goodsName")}
 						</a></td>
 						<td>
 							${fieldValue(bean: goodsInstance, field: "originalPriceDes")}
@@ -145,6 +144,7 @@
 							${fieldValue(bean: goodsInstance, field: "creationDateDes")}
 						</td>
 
+						<td><g:link action="show" id="${goodsInstance.id}">查看</g:link></td>
 						<td><g:link action="edit" id="${goodsInstance.id}">编辑</g:link></td>
 						<td><g:link url="javascript:deleteGoods(${goodsInstance.id})"
 								id="${goodsInstance.id}">删除</g:link></td>

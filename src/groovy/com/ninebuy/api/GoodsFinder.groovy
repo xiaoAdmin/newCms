@@ -20,14 +20,14 @@ class GoodsFinder {
 
 	def processGoods(long pageNo,long pageSize,String Keyword){
 		def remoteGoods = findGoods(pageNo, pageSize,Keyword)
-		
+
 		def localGoodsMap = loadLocalGoods()
-		println '---'+remoteGoods.size()
 		remoteGoods.each {
 			if (localGoodsMap.keySet().contains(it.numId)) {
 				//TODO：update info and save
+			}else{
+				println it.save()
 			}
-			println it.save()
 		}
 	}
 

@@ -20,7 +20,7 @@ class SearchGoodsService {
 		def queryParams = [:]
 		queryParams['max'] = Math.min(max ?: 10, 100)
 		queryParams['offset'] = params['offset'] ?: 0
-
+		println params
 		PagedResultList goodsList = Goods.createCriteria().list(queryParams){
 			println params
 			if(params['goodsStatus']) {
@@ -37,7 +37,7 @@ class SearchGoodsService {
 					like('nick',"%${params.keyWords}%")
 					like('goodsName',"%${params.keyWords}%")
 					like('goodsLocation',"%${params.keyWords}%")
-					like('promotionPrice',"%${params.keyWords}%")
+//					like('promotionPrice',"%${params.keyWords}%")
 				}
 			}
 			if(params['sort']) {

@@ -13,7 +13,7 @@
 	</ul>
 	<h1>后台功能管理</h1>
 	<ul>
-		<li>会员管理</li>
+		<li><g:link controller="user" action="list">会员管理</g:link></li>
 	</ul>
 </div>
 
